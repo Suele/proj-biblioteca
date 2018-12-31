@@ -3,9 +3,8 @@ const router = express.Router();
 const Autor = require('../model/models/Autor');
 
 router.get('/', (req, res) => {
-  res.json({
-    message: 'rota autor'
-  });
+  const autor = new Autor();
+  return autor;
 });
 
 router.post('/', (req, res) => {
@@ -15,7 +14,7 @@ router.post('/', (req, res) => {
     password: req.body.password,
   });
   autor.save()
-    .then(result => res.json({result}))
+    .then(result => res.status(201).json({result}))
     .cath(erro => res.json(erro))
 });
 
