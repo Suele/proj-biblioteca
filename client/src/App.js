@@ -3,8 +3,8 @@ import "./css/pure-min.css";
 import "./css/side-menu.css";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       listaAutor: [],
@@ -16,9 +16,9 @@ class App extends Component {
   getAutores = () => {
     const requestInfo = {
       method: "GET",
-      headers: new Headers({
+      headers: {
         "Content-type": "application/json"
-      })
+      }
     };
     fetch("http://cdc-react.herokuapp.com/api/autores", requestInfo)
       .then(res => res.json())
@@ -34,19 +34,28 @@ class App extends Component {
   }
 
   enviaForm = (event) => {
+    console.log('fui clicado');
     event.preventDefault();
 
-    const requestInfo = {
-      method: "POST",
-      mode: 'cors',
-      body: JSON.stringify({nome: this.state.nome, email: this.state.email, password: this.state.password}),
-      headers: new Headers({
-        "Content-type": "application/json"
-      })
+    const autor = {
+      name: this.state.name, 
+      email: this.state.email, 
+      password: this.state.password
+    }
+
+     const requestInfo = {
+      method: 'post',
+      body: JSON.stringify(autor),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     };
-    fetch("http://cdc-react.herokuapp.com/api/autores", requestInfo)
-      .then(res => console.log(res))
-      .catch(erro => erro.json());
+    console.log(requestInfo);
+    fetch('http://cdc-react.herokuapp.com/api/autores', requestInfo)
+    .then(res => res.json())
+    .then(resJson => {
+     console.log(resJson);
+    });
   }
 
   setName = event => {
