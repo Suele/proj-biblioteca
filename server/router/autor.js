@@ -3,12 +3,13 @@ const router = express.Router();
 const Autor = require('../model/models/Autor');
 
 router.get('/', (req, res) => {
-  Autor.find();
+  Autor.find()
+  .then(autor => res.status(200).json({autor}));
 });
 
- router.get('/:autorid', (req, res) => {
-   const id = req.params.autorid
-   Autor.findById(id)
+ router.get('/:id', (req, res) => {
+   const idAutor = req.params.id
+   Autor.findById(idAutor)
      .then((autor) => {
        res.status(200).json({
          autor
