@@ -4,9 +4,19 @@ const Autor = require('../model/models/Autor');
 
 router.get('/', (req, res) => {
   Autor.find()
-    .then(autor => res.status(200).json({
-      autor
-    }));
+    .then((autor) => {
+      if(autor.length > 0){
+        res.status(200).json({autor});
+      }else{
+        res.json({
+          message: 'nenhum autor registrado.'
+        });
+      }
+    }).catch(() => {
+      res.status(404).json({
+        message: 'not date in Autor.'
+      });
+    });
 });
 
 router.delete('/:id', (req, res) => {
@@ -21,9 +31,15 @@ router.get('/:id', (req, res) => {
   const idAutor = req.params.id
   Autor.findById(idAutor)
     .then((autor) => {
-      res.status(200).json({
-        autor
-      })
+      if (autor) {
+        res.status(200).json({
+          autor
+        })
+      }else{
+        res.status(404).json({
+          mensagem: 'O id inserido não foi encontrado.'
+        });
+      }
     }).catch((erro) => {
       res.status(406).json({
         message: '406 Not Acceptable',
