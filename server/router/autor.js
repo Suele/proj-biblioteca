@@ -5,9 +5,9 @@ const Autor = require('../model/models/Autor');
 router.get('/', (req, res) => {
   Autor.find()
     .then((autor) => {
-      if(autor.length > 0){
-        res.status(200).json({autor});
-      }else{
+      if (autor.length > 0) {
+        res.status(200).json({ autor });
+      } else {
         res.json({
           message: 'nenhum autor registrado.'
         });
@@ -22,9 +22,14 @@ router.get('/', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
   Autor.remove({
-      _id: id
-    })
-    .then(resultado => res.status(200).json(resultado));
+    _id: id
+  })
+    .then(resultado => { res.status(200).json(resultado) })
+    .catch(() => {
+      res.json({
+        message: `${id}, não encontrado.`
+      })
+    });
 });
 
 router.get('/:id', (req, res) => {
@@ -35,7 +40,7 @@ router.get('/:id', (req, res) => {
         res.status(200).json({
           autor
         })
-      }else{
+      } else {
         res.status(404).json({
           mensagem: 'O id inserido não foi encontrado.'
         });
