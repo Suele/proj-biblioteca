@@ -69,4 +69,24 @@ router.post('/', (req, res) => {
     }));
 });
 
+router.patch('/:id', (req, res) => {
+  const id = req.params.id
+  console.log(id);
+  const updateOps = {};
+  for (const ops of req.body) {
+    updateOps[ops.propName] = ops.value
+    console.log(updateOps);
+  }
+  Autor.updateOne({ _id: id }, { $set: updateOps })
+    .then((result) => {
+      res.status(200).json({
+        result
+      });
+    }).catch(() => {
+      res.status(400).json({
+        message: 'deu merda'
+      });
+    });
+});
+
 module.exports = router;
