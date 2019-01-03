@@ -1,4 +1,4 @@
-const mongoose = require('../index');
+const mongoose = require('../connectDB');
 var Schema = mongoose.Schema;
 
 const AutorSchema = new Schema({
