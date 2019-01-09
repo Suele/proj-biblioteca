@@ -60,8 +60,8 @@ router.post('/', (req, res) => {
     password: req.body.password,
   });
   autor.save()
-    .then(result => res.status(201).json({
-      result
+    .then(autor => res.status(201).json({
+      autor
     }))
     .catch((erro) => res.status(406).json({
       message: '406 Not Acceptable',
@@ -73,18 +73,27 @@ router.patch('/:id', (req, res) => {
   const id = req.params.id
   console.log(id);
   const updateOps = {};
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.value
-    console.log(updateOps);
+  console.log('updateOps', updateOps);
+  console.log('req.body: ' , req.body);
+  for (const bodyRequest of req.body) {
+    updateOps[bodyRequest.propName] = bodyRequest.newValue
+
+    console.log('bodyRequest: ', bodyRequest);
+    console.log('[bodyRequest.propName]: ', bodyRequest.propName);
+    console.log('bodyRequest.newValue: ',bodyRequest.newValue);
+    console.log('updateOps', updateOps);
+    console.log('updateOps[bodyRequest.propName] = bodyRequest.newValue: ', updateOps[bodyRequest.propName] = bodyRequest.newValue);
+    console.log('req.body: ' , req.body);
+    console.log('-------------------');
   }
-  Autor.updateOne({ _id: id }, { $set: updateOps })
+  Autor.update({ _id: id }, { $set: updateOps })
     .then((result) => {
       res.status(200).json({
         result
       });
     }).catch(() => {
       res.status(400).json({
-        message: 'deu merda'
+        message: `Não foi possível atualizar os dados do id: ${id}.`
       });
     });
 });
