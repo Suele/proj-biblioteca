@@ -16,16 +16,18 @@ class App extends Component {
   getAutores = () => {
     const requestInfo = {
       method: "GET",
-      headers: {
+      headers : new Headers ({
         "Content-type": "application/json"
-      }
+      })
     };
-    fetch("http://cdc-react.herokuapp.com/api/autores", requestInfo)
-      .then(res => res.json())
-      .then(resJson => {
+    fetch("http://localhost:3001/", requestInfo)
+      .then((res) => res.json())
+      .then(autores => {
+        {console.log(autores)}
         this.setState({
-          listaAutor: resJson
+          listaAutor : autores.autor
         });
+        {console.log('lista de autor: ' ,autores)}
       });
   };
   
@@ -143,16 +145,19 @@ class App extends Component {
               <table className="pure-table">
                 <thead>
                   <tr>
-                    <th>Nome</th>
+                    <th>name</th>
                     <th>email</th>
+                    <th>password</th>
                   </tr>
                 </thead>
                 <tbody>
                   {this.state.listaAutor.map(autor => {
                     return (
+                      
                       <tr key={autor.id}>
-                        <td>{autor.nome}</td>
+                        <td>{autor.name}</td>
                         <td>{autor.email}</td>
+                        <td>{autor.password}</td> 
                       </tr>
                     );
                   })}
