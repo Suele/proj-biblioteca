@@ -2,12 +2,21 @@ const mongoose = require('../connectDB');
 var Schema = mongoose.Schema;
 
 const AutorSchema = new Schema({
-  name: String,
-  email: String,
-  password: String,
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
-    dafault: Date.now
+    default: Date.now
   }
 });
 
