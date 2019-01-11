@@ -23,7 +23,6 @@ class App extends Component {
     fetch("http://localhost:3001/", requestInfo)
       .then((res) => res.json())
       .then(autores => {
-        {console.log(autores)}
         this.setState({
           listaAutor : autores.autor
         });
@@ -53,10 +52,14 @@ class App extends Component {
       }
     };
     console.log(requestInfo);
-    fetch('http://cdc-react.herokuapp.com/api/autores', requestInfo)
+    fetch('http://localhost:3001/', requestInfo)
     .then(res => res.json())
     .then(resJson => {
      console.log(resJson);
+     this.setState({
+       resJson
+    });
+    {console.log('Nova lista de autor: ' ,resJson)}
     });
   }
 
